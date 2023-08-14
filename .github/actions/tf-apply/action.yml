@@ -1,0 +1,58 @@
+name: Terraform Apply
+description: Common steps for Terraform apply
+inputs:
+  arm-client-id:
+    description: Azure client id
+    required: true
+  arm-tenant-id:
+    description: Azure tenant id
+  environment:
+    description: Environment
+    required: true
+  tf-root-dir:
+    description: 'Terraform root directory'
+    required: true
+    default: ${{ github.workspace }}
+  tf-paralellism:
+    description: 'Terraform parallelism'
+    required: false
+    default: '50'
+  tf-version:
+    description: Terraform version
+    required: true
+runs:
+  using: composite
+  steps:
+  - uses: hashicorp/setup-terraform@v2
+    with:
+      terraform_version: ${{ inputs.tf-version}}
+
+  - name: Terraform init
+    run: |
+      terraform init  -input=false
+    working-directory: ${{ inputs.tf-root-dir }}
+    env:
+      ARM_CLIENT_ID: ${{ inputs.arm-client-id }}
+      ARM_TENANT_ID: ${{ inputs.arm-tenant-id }}
+    shell: bash
+
+  - name: Download artifact
+    uses: actions/download-artifact@v3
+    with:
+      name: tfplan
+      path: ${{ inputs.tf-root-dir }}
+
+  - name: Terraform apply
+    id: apply
+    run: |
+      terraform apply \
+        -input=false \
+        -parallelism=${{ inputs.tf-paralellism }} \
+        tfplan
+    continue-on-error: true
+    working-directory: ${{ inputs.tf-root-dir }}
+    env:
+      ARM_CLIENT_ID: ${{ inputs.arm-client-id }}
+      ARM_TENANT_ID: ${{ inputs.arm-tenant-id }}
+      ARM_USE_OIDC: 'true'
+    shell: bash

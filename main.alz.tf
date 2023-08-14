@@ -30,14 +30,14 @@ module "alz" {
   deploy_online_landing_zones = true
   deploy_diagnostics_for_mg   = true
 
-  default_location = "northeurope"
+  default_location = "westeurope"
 
   disable_telemetry = true
 
   // Set subscription IDs for placement of platform subs
   subscription_id_management   = data.azurerm_client_config.management.subscription_id
   subscription_id_connectivity = data.azurerm_client_config.connectivity.subscription_id
-  subscription_id_identity     = "2e4e0f6e-2391-498f-8f0f-ae54960cb44f"
+  subscription_id_identity     = "660f8f6b-518b-4d71-ba96-c59beab19f3a"
 
   // Use management group association instead of having to be explicit about MG membership
   strict_subscription_association = false
@@ -51,7 +51,7 @@ module "alz" {
       }
       security_center = {
         config = {
-          email_security_contact = "admin@mattfff.onmicrosoft.com"
+          email_security_contact = "hansze@microsoft.com"
         }
         enabled = true
       }

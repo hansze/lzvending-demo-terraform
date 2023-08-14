@@ -30,7 +30,7 @@ module "alz" {
   deploy_online_landing_zones = true
   deploy_diagnostics_for_mg   = true
 
-  default_location = "westeurope"
+  default_location = "northeurope"
 
   disable_telemetry = true
 

@@ -3,6 +3,7 @@ name: newlz
 workload: Production
 location: northeurope
 billing_enrollment_account: 'd07e5c91-d3d6-4fbb-8d51-1d98f4cce8d0'
+subscription_id: '660f8f6b-518b-4d71-ba96-c59beab19f3a' # added so no New Subscription is created for testing
 management_group_id: mw-demo-online
 virtual_networks:
   vnet1:

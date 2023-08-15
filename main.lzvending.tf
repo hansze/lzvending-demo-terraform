@@ -8,14 +8,14 @@ module "lz_vending" {
   location = each.value.location
 
   # subscription variables
-  subscription_alias_enabled = true
-  subscription_billing_scope = "/providers/Microsoft.Billing/billingAccounts/7690848/enrollmentAccounts/${each.value.billing_enrollment_account}"
+  subscription_alias_enabled = false # Changed from True
+  subscription_billing_scope = "/providers/Microsoft.Billing/billingAccounts/c1302900-7ed5-49ee-beb4-5f40dd420485/enrollmentAccounts/${each.value.billing_enrollment_account}"
   subscription_display_name  = each.value.name
   subscription_alias_name    = each.value.name
   subscription_workload      = each.value.workload
 
   # management group association variables
-  subscription_management_group_association_enabled = true
+  subscription_management_group_association_enabled = false # Changed from  true
   subscription_management_group_id                  = each.value.management_group_id
 
   # virtual network variables

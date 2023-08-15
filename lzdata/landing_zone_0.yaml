@@ -2,7 +2,7 @@
 name: newlz
 workload: Production
 location: northeurope
-billing_enrollment_account: 322580
+billing_enrollment_account: 'd07e5c91-d3d6-4fbb-8d51-1d98f4cce8d0'
 management_group_id: mw-demo-online
 virtual_networks:
   vnet1:

@@ -69,7 +69,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request_target' && needs.ci.outputs.plan-exitcode == '2'
     needs: ci
     runs-on: ubuntu-22.04
-    environment: prod-approval
+    #environment: prod-approval
     steps:
     - name: Azure login
       uses: azure/login@v1

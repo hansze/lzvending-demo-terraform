@@ -36,3 +36,12 @@ $BillingAccountId = 'c1302900-7ed5-49ee-beb4-5f40dd420485'
 Start-Process 'https://portal.azure.com/#@M365x12435175.onmicrosoft.com/resource/subscriptions/660f8f6b-518b-4d71-ba96-c59beab19f3a/properties'
 #  "/providers/Microsoft.Billing/billingAccounts//enrollmentAccounts/${each.value.billing_enrollment_account}"
 
+# Microsoft.Authorization/roleAssignments
+#
+
+
+### Leverages the Azure Landing Zone Module (ALZ)
+# which leverages the TerramForm providers AzureRm and AzAPI
+
+
+#

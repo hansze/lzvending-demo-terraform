@@ -5,7 +5,10 @@ location: northeurope
 billing_enrollment_account: 'd07e5c91-d3d6-4fbb-8d51-1d98f4cce8d0'
 subscription_id: 'd3b8e8c7-2ef5-4a10-818d-02dbc90cfc46' # added so no New Subscription is created for testing
 management_group_id: mw-demo-online
+vwan_hub_networks:
+  location: northeurope
 virtual_networks:
+  location: northeurope
   vnet1:
     name: spoke
     address_space:

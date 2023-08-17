@@ -6,6 +6,7 @@ terraform {
       version = ">= 3.35.0"
     }
   }
+  # Comment out backend to run init local
   backend "azurerm" {
     container_name       = "tfstate"
     key                  = "terraform.tfstate"

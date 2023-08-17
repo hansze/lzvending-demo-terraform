@@ -11,4 +11,6 @@ virtual_networks:
     address_space:
       - "192.168.2.0/24"
     resource_group_name: rg-networking
+    vwan_connection_enabled: true # Added for vWAN Hub
+    vwan_hub_resource_id: 'vwan-hub' # Added for vWAN Hub
     hub_peering_enabled: true

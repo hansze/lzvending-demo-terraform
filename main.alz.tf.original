@@ -1,0 +1,91 @@
+data "azurerm_client_config" "core" {
+  provider = azurerm
+}
+
+data "azurerm_client_config" "management" {
+  provider = azurerm.management
+}
+
+data "azurerm_client_config" "connectivity" {
+  provider = azurerm.connectivity
+}
+
+
+module "alz" {
+  source = "Azure/caf-enterprise-scale/azurerm"
+  #source = "github.com/Azure/terraform-azurerm-caf-enterprise-scale?ref=main"
+  version = "= 3.3.0"
+
+  providers = {
+    azurerm              = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
+  }
+
+  root_parent_id = data.azurerm_client_config.core.tenant_id
+  root_id        = var.root_id
+  root_name      = var.root_name
+
+  deploy_corp_landing_zones   = true
+  deploy_online_landing_zones = true
+  deploy_diagnostics_for_mg   = true
+
+  default_location = "northeurope"
+
+  disable_telemetry = true
+
+  // Set subscription IDs for placement of platform subs
+  subscription_id_management   = data.azurerm_client_config.management.subscription_id
+  subscription_id_connectivity = data.azurerm_client_config.connectivity.subscription_id
+  subscription_id_identity     = "660f8f6b-518b-4d71-ba96-c59beab19f3a"
+
+  // Use management group association instead of having to be explicit about MG membership
+  strict_subscription_association = false
+
+  // Management resources
+  deploy_management_resources = true
+  configure_management_resources = {
+    settings = {
+      log_analytics = {
+        enabled = true
+      }
+      security_center = {
+        config = {
+          email_security_contact = "hansze@microsoft.com"
+        }
+        enabled = true
+      }
+    }
+    tags = null
+  }
+
+  // Connectivity (hub network) configuration
+  deploy_connectivity_resources = true
+  configure_connectivity_resources = {
+    settings = {
+      ddos_protection_plan = {
+        enabled = false
+      }
+      dns = {
+        enabled = false
+      }
+      hub_networks = [{
+        config = {
+          address_space = ["10.0.0.0/23"]
+          azure_firewall = {
+            enabled = false
+          }
+          subnets = [{
+            address_prefixes = ["10.0.0.0/24"]
+            name             = "default"
+          }]
+          virtual_network_gateway = {
+            enabled = false
+          }
+        }
+        enabled = true
+      }]
+    }
+    tags = null
+  }
+}

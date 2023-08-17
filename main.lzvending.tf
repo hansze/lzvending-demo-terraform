@@ -2,8 +2,8 @@
 # in the data directory.
 module "lz_vending" {
   source   = "Azure/lz-vending/azurerm"
-  version  = "3.1.0" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
-  for_each = local.landing_zone_data_map
+  version  = "3.1.0"                     # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
+  for_each = local.landing_zone_data_map #
 
   location = each.value.location
 
@@ -20,14 +20,18 @@ module "lz_vending" {
   subscription_management_group_id                  = each.value.management_group_id
 
   # virtual network variables
+  # COMMENTED out as we are using VWAN
   virtual_network_enabled = true
   virtual_networks = {
     for k, v in each.value.virtual_networks : k => merge(
       v,
       {
-        hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
-        hub_peering_use_remote_gateways = false
+        #hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
+        #hub_peering_use_remote_gateways = false
+        vwan_connection_enabled = true
+        vwan_connection_enabled = local.virtual_hubs_by_location[each.value.location]
       }
     )
   }
+
 }

@@ -44,4 +44,19 @@ Start-Process 'https://portal.azure.com/#@M365x12435175.onmicrosoft.com/resource
 # which leverages the TerramForm providers AzureRm and AzAPI
 
 
-#
+# Permissions needed
+Start-Process 'https://github.com/Azure/terraform-azurerm-lz-vending/wiki/Permissions'
+
+start-Process 'https://github.com/Azure/terraform-azurerm-lz-vending/blob/main/docs/wiki/Permissions.md'
+
+# Create Custom Role to Assign SP
+
+
+# Heirarchy 
+Start-Process 'https://learn.microsoft.com/en-us/azure/governance/management-groups/overview#moving-management-groups-and-subscriptions'
+
+# [Examples] Deploy Virtual WAN Resources
+Start-Process 'https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/%5BExamples%5D-Deploy-Virtual-WAN-Resources'
+
+# Create a hub virtual network in Azure by using Terraform
+Start-Process 'https://learn.microsoft.com/en-us/azure/developer/terraform/hub-spoke-hub-network'

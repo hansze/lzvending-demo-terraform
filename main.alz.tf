@@ -72,7 +72,7 @@ module "alz" {
           enabled = true
           config = {
             address_prefix = "10.200.0.0/22"
-            location       = ""
+            location       = "northeurope"
             sku            = ""
             routes         = []
             expressroute_gateway = {

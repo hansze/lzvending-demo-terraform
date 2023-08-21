@@ -28,10 +28,10 @@ variable "connectivity_resources_tags" {
 # 
 # # Variables used to control the deployment of management resources for
 # # the platform
-# variable "deploy_management_resources" {
-#   type    = bool
-#   default = true
-# }
+variable "deploy_management_resources" {
+  type    = bool
+  default = true
+}
 # 
 # variable "management_security_contact_email" {
 #   type    = string

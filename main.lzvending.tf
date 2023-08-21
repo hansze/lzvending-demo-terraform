@@ -20,7 +20,6 @@ module "lz_vending" {
   subscription_management_group_id                  = each.value.management_group_id
 
   # virtual network variables
-  # COMMENTED out as we are using VWAN
   virtual_network_enabled = true
   virtual_networks = {
     for k, v in each.value.virtual_networks : k => merge(
@@ -28,8 +27,8 @@ module "lz_vending" {
       {
         #hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
         #hub_peering_use_remote_gateways = false
-        vwan_connection_enabled = true
-        vwan_connection_enabled = local.virtual_hubs_by_location[each.value.location]
+        #vwan_connection_enabled = true
+        #vwan_hub_resource_id    = local.virtual_hubs_by_location[each.value.location]
       }
     )
   }

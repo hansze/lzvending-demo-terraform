@@ -1,69 +1,5 @@
-data "azurerm_client_config" "core" {
-  provider = azurerm
-}
-
-data "azurerm_client_config" "management" {
-  provider = azurerm.management
-}
-
-data "azurerm_client_config" "connectivity" {
-  provider = azurerm.connectivity
-}
-
-
-module "alz" {
-  source = "Azure/caf-enterprise-scale/azurerm"
-  #source = "github.com/Azure/terraform-azurerm-caf-enterprise-scale?ref=main"
-  version = "= 3.3.0"
-
-  providers = {
-    azurerm              = azurerm
-    azurerm.connectivity = azurerm.connectivity
-    azurerm.management   = azurerm.management
-  }
-
-  root_parent_id = data.azurerm_client_config.core.tenant_id
-  root_id        = var.root_id
-  root_name      = var.root_name
-
-  deploy_corp_landing_zones   = true
-  deploy_online_landing_zones = true
-  deploy_diagnostics_for_mg   = true
-
-  default_location = "northeurope"
-
-  disable_telemetry = true
-
-  // Set subscription IDs for placement of platform subs
-  subscription_id_management   = data.azurerm_client_config.management.subscription_id
-  subscription_id_connectivity = data.azurerm_client_config.connectivity.subscription_id
-  subscription_id_identity     = "26f87617-364a-4ac7-bdc3-44bf3e33b253" # ME-M365x12435175-hansze-2
-
-  // Use management group association instead of having to be explicit about MG membership
-  strict_subscription_association = false
-
-  // Management resources
-  deploy_management_resources = true
-  configure_management_resources = {
-    settings = {
-      log_analytics = {
-        enabled = true
-      }
-      security_center = {
-        config = {
-          email_security_contact = "hansze@microsoft.com"
-        }
-        enabled = true
-      }
-    }
-    tags = null
-  }
-
-  // Connectivity (hub network) configuration
-  deploy_connectivity_resources = true
-  # Configure custom settings for the module to deploy Virtual WAN hub
-  # network resources instead of traditional hub network resources.
-  # Below taken from https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/%5BExamples%5D-Deploy-Virtual-WAN-Resources
+# Configure the connectivity resources settings.
+locals {
   configure_connectivity_resources = {
     settings = {
       hub_networks = []
@@ -76,7 +12,7 @@ module "alz" {
             sku            = ""
             routes         = []
             expressroute_gateway = {
-              enabled = false
+              enabled = true
               config = {
                 scale_unit = 1
               }
@@ -90,9 +26,52 @@ module "alz" {
               }
             }
             azure_firewall = {
+              enabled = true
+              config = {
+                enable_dns_proxy              = true
+                dns_servers                   = []
+                sku_tier                      = "Standard"
+                base_policy_id                = ""
+                private_ip_ranges             = []
+                threat_intelligence_mode      = ""
+                threat_intelligence_allowlist = []
+                availability_zones = {
+                  zone_1 = true
+                  zone_2 = true
+                  zone_3 = true
+                }
+              }
+            }
+            spoke_virtual_network_resource_ids        = []
+            secure_spoke_virtual_network_resource_ids = []
+            enable_virtual_hub_connections            = false
+          }
+        },
+        {
+          enabled = true
+          config = {
+            address_prefix = "10.201.0.0/22"
+            location       = "westeurope"
+            sku            = ""
+            routes         = []
+            expressroute_gateway = {
               enabled = false
               config = {
-                enable_dns_proxy              = false
+                scale_unit = 1
+              }
+            }
+            vpn_gateway = {
+              enabled = true
+              config = {
+                bgp_settings       = []
+                routing_preference = ""
+                scale_unit         = 1
+              }
+            }
+            azure_firewall = {
+              enabled = false
+              config = {
+                enable_dns_proxy              = true
                 dns_servers                   = []
                 sku_tier                      = "Standard"
                 base_policy_id                = ""
@@ -113,15 +92,15 @@ module "alz" {
         },
       ]
       ddos_protection_plan = {
-        enabled = false # Disabled to reduce Costs - enable in Production Environment
+        enabled = true
         config = {
-          location = ""
+          location = "northeurope"
         }
       }
       dns = {
         enabled = true
         config = {
-          location = ""
+          location = null
           enable_private_link_by_service = {
             azure_api_management                 = true
             azure_app_configuration_stores       = true
@@ -186,7 +165,10 @@ module "alz" {
             storage_account_table                = true
             storage_account_web                  = true
           }
-          private_link_locations                                 = []
+          private_link_locations = [
+            "northeurope",
+            "westeurope",
+          ]
           public_dns_zones                                       = []
           private_dns_zones                                      = []
           enable_private_dns_zone_virtual_network_link_on_hubs   = true
@@ -195,8 +177,9 @@ module "alz" {
         }
       }
     }
-    location = null
-    tags     = null
+
+    location = var.connectivity_resources_location
+    tags     = var.connectivity_resources_tags
     advanced = null
   }
 }

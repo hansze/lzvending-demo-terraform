@@ -1,3 +1,4 @@
+
 # Configure the connectivity resources settings.
 locals {
   configure_connectivity_resources = {

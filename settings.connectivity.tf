@@ -5,7 +5,25 @@
 locals {
   configure_connectivity_resources = {
     settings = {
-      hub_networks = []
+      # hub_networks = []
+      hub_networks = [{
+        config = {
+          address_space = ["10.0.0.0/23"]
+          location      = "northeurope" # Added
+          azure_firewall = {
+            enabled = false
+          }
+          subnets = [{
+            address_prefixes = ["10.0.0.0/24"]
+            name             = "default"
+          }]
+          virtual_network_gateway = {
+            enabled = false
+          }
+        }
+        enabled = true
+      }]
+
       vwan_hub_networks = [
         {
           enabled = true

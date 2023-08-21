@@ -1,5 +1,7 @@
 
 # Configure the connectivity resources settings.
+# Ref: https://github.com/Azure/terraform-azurerm-caf-enterprise-scale/wiki/%5BExamples%5D-Deploy-Virtual-WAN-Resources
+
 locals {
   configure_connectivity_resources = {
     settings = {

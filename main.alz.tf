@@ -46,8 +46,8 @@ module "alz" {
   strict_subscription_association = false
 
   # Values will cause platform components to be deployed
-  deploy_connectivity_resources = true #var.deploy_connectivity_resources
-  deploy_management_resources   = true #var.deploy_management_resources
+  deploy_connectivity_resources = var.deploy_connectivity_resources
+  deploy_management_resources   = var.deploy_management_resources
 
   # Configuration data comes from Settings.connectivity.tf
   configure_connectivity_resources = local.configure_connectivity_resources

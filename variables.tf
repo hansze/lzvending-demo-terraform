@@ -8,11 +8,11 @@ variable "root_name" {
   default = "MW-Demo"
 }
 
-# variable "deploy_connectivity_resources" {
-#   type    = bool
-#   default = true
-# }
-# 
+variable "deploy_connectivity_resources" {
+  type    = bool
+  default = true
+}
+
 variable "connectivity_resources_location" {
   type    = string
   default = "northeurope"
@@ -32,12 +32,12 @@ variable "deploy_management_resources" {
   type    = bool
   default = true
 }
-# 
-# variable "management_security_contact_email" {
-#   type    = string
-#   default = "hansze@microsoft.com"
-# }
-# 
+
+variable "management_security_contact_email" {
+  type    = string
+  default = "hansze@microsoft.com"
+}
+
 variable "subscription_id_identity" {
   type = string
   # ME-M365x12435175-hansze-2

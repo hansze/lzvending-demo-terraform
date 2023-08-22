@@ -12,5 +12,5 @@ virtual_networks:
       - "192.168.2.0/24"
     resource_group_name: rg-networking
     vwan_connection_enabled: true # Added for vWAN Hub
-    vwan_hub_resource_id: 'mw-demo-hub-northeurope' # Added for vWAN Hub
+    vwan_hub_resource_id: '/subscriptions/660f8f6b-518b-4d71-ba96-c59beab19f3a/resourceGroups/mw-demo-connectivity/providers/Microsoft.Network/virtualHubs/mw-demo-hub-northeurope"' # Added for vWAN Hub
     hub_peering_enabled: true

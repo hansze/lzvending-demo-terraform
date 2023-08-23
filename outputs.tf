@@ -1,9 +1,6 @@
 data "azurerm_client_config" "current" {
 }
 
-data "azurerm_client_config" "connectivity" {
-}
-
 output "conn" {
   description = "Connectivity Object"
   value       = data.azurerm_client_config.connectivity

@@ -32,5 +32,4 @@ module "lz_vending" {
       }
     )
   }
-
 }

@@ -4,14 +4,15 @@ data "azurerm_client_config" "core" {
   provider = azurerm
 }
 
-data "azurerm_client_config" "management" {
-  provider = azurerm.management
-}
-
-data "azurerm_client_config" "connectivity" {
-  provider = azurerm.connectivity
-}
-
+### Not being used on line 47 and 48 so commented out
+# data "azurerm_client_config" "management" {
+#   provider = azurerm.management
+# }
+# 
+# data "azurerm_client_config" "connectivity" {
+#   provider = azurerm.connectivity
+# }
+# 
 
 module "alz" {
   source = "Azure/caf-enterprise-scale/azurerm"

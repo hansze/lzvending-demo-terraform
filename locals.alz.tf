@@ -6,10 +6,11 @@ locals {
   #}
 
   # Create Mapping location to vWAN
-  virtual_hubs_by_location = {
-    for k, v in module.alz.azurerm_virtual_network.connectivity :
-    v.location => k
-  }
+  # MAPPING was not taking HACK change back later
+  #virtual_hubs_by_location = {
+  #  for k, v in module.alz.azurerm_virtual_network.connectivity :
+  #  v.location => k
+  #}
 
 }
 

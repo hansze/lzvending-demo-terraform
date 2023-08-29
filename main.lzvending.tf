@@ -28,7 +28,8 @@ module "lz_vending" {
         #hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
         #hub_peering_use_remote_gateways = false
         vwan_connection_enabled = true
-        vwan_hub_resource_id    = local.virtual_hubs_by_location[each.value.location]
+        ### HACK - Mapping to Location failing last min...
+        vwan_hub_resource_id = "/subscriptions/660f8f6b-518b-4d71-ba96-c59beab19f3a/resourceGroups/mw-demo-connectivity/providers/Microsoft.Network/virtualHubs/mw-demo-hub-northeurope" #local.virtual_hubs_by_location[each.value.location]
       }
     )
   }

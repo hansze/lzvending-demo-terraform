@@ -25,10 +25,10 @@ module "lz_vending" {
     for k, v in each.value.virtual_networks : k => merge(
       v,
       {
-        hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
-        hub_peering_use_remote_gateways = false
-        #vwan_connection_enabled = true
-        #vwan_hub_resource_id    = local.virtual_hubs_by_location[each.value.location]
+        #hub_network_resource_id         = local.hub_networks_by_location[each.value.location]
+        #hub_peering_use_remote_gateways = false
+        vwan_connection_enabled = true
+        vwan_hub_resource_id    = local.virtual_hubs_by_location[each.value.location]
       }
     )
   }

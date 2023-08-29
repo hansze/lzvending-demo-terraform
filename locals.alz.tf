@@ -3,6 +3,12 @@ locals {
     for k, v in module.alz.azurerm_virtual_network.connectivity :
     v.location => k
   }
+  # Create Mapping location to vWAN
+  virtual_hubs_by_location = {
+    for k, v in module.alz.azurerm_virtual_network.connectivity :
+    v.location => k
+  }
+
 }
 
 

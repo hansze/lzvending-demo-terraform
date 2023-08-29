@@ -8,6 +8,8 @@ variable "root_name" {
   default = "MW-Demo"
 }
 
+
+### These variables are used to determine which of the platform LZ resources will be deployed
 variable "deploy_connectivity_resources" {
   type    = bool
   default = true
@@ -38,6 +40,8 @@ variable "management_security_contact_email" {
   default = "hansze@microsoft.com"
 }
 
+#### Demo Variable used to Move an existing Subscription to a Managagement group -
+# Platform/Identit7
 variable "subscription_id_identity" {
   type = string
   # ME-M365x12435175-hansze-2

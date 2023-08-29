@@ -1,9 +1,9 @@
 data "azurerm_client_config" "current" {
 }
 
-output "conn" {
+output "c" {
   description = "Connectivity Object"
-  value       = data.azurerm_client_config.connectivity
+  value       = data.azurerm_client_config.connectivity.this.virtual_networks
 }
 
 
